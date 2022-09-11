@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 
 const Form = () => {
   const [users, setUsers] = useState([]);
@@ -7,17 +7,27 @@ const Form = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [cPassword, setCPassword] = useState("");
+  const nameRef = useRef("");
 
   const formHandler = (e) => {
     e.preventDefault();
-    const newUsers = [...users];
-    newUsers.push({ fname, lname, email, password, cPassword });
-    setUsers(newUsers);
-    setFname("");
-    setLname("");
-    setEmail("");
-    setPassword("");
-    setCPassword("");
+    if (
+      fname !== "" &&
+      lname !== "" &&
+      email !== "" &&
+      password !== "" &&
+      cPassword !== ""
+    ) {
+      const newUsers = [...users];
+      newUsers.push({ fname, lname, email, password, cPassword });
+      setUsers(newUsers);
+      setFname("");
+      setLname("");
+      setEmail("");
+      setPassword("");
+      setCPassword("");
+      nameRef.current.focus();
+    }
   };
   return (
     <form action="" className="form" onSubmit={formHandler}>
@@ -26,6 +36,7 @@ const Form = () => {
         <input
           type="text"
           value={fname}
+          ref={nameRef}
           onChange={(e) => setFname(e.target.value)}
         />
       </div>
